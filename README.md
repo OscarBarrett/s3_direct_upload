@@ -40,6 +40,21 @@ Make sure your AWS S3 CORS settings for your bucket look something like this:
 ```
 In production the AllowedOrigin key should be your domain.
 
+If you are using a restrictive IAM policy, you will need allow the `s3:PutObjectAcl` action for your upload folder. For example:
+```
+{
+  "Version":"2012-10-17",
+  "Statement": [
+    {
+       "Sid": "AllowUploadsInTmpDirectory",
+       "Action":["s3:PutObjectAcl"],
+       "Effect":"Allow",
+       "Resource": ["arn:aws:s3:::your-bucket/tmp/*"]
+    }
+  ]
+}
+```
+
 Add the following js and css to your asset pipeline:
 
 **application.js.coffee**
